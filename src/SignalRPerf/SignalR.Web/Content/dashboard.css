@@ -1,0 +1,13 @@
+﻿
+#rate {
+    font-size: 1.0em;
+}
+
+#rateCount, #rateSeconds {
+    font-size: 0.8em;
+    width: 3em;
+}
+
+#rateBatching {
+    display: none;
+}

@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<div id="body">
+    <h1>ASP.NET SignalR Load Test Harness</h1>
+    <fieldset id="options">
+        <legend>Dashboard</legend>
+        <div>
+            <label for="connectionBehavior">Connection behavior:</label>
+            <select id="connectionBehavior" data-bind="value: connectionBehavior">
+                <option value="0">Listen only</option>
+                <option value="1">Echo</option>
+                <option value="2">Broadcast</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="broadcastBehavior">Broadcast behavior:</label>
+            <span>
+                <input type="checkbox" id="broadcastBehavior" data-bind="checked: batching" />
+                <label for="broadcastBehavior">batch</label>
+            </span>
+        </div>
+
+        <div id="rate">
+            <label for="rateCount">Broadcast rate:</label>
+            <input id="rateCount" maxlength="3" min="1" max="100" data-bind="value: broadcastCount" />
+            <span data-bind="visible: notBatching">msg/sec</span>
+            <span data-bind="visible: batching">msg per <input id="rateSeconds" maxlength="3" min="1" max="10" data-bind="value: broadcastSeconds" /> sec</span>
+        </div>
+
+        <div>
+            <label for="payloadSize">Broadcast size:</label>
+            <select id="payloadSize" data-bind="value: broadcastSize">
+                <option value="32">32 bytes</option>
+                <option value="64">64 bytes</option>
+                <option value="128">128 bytes</option>
+                <option value="256">256 bytes</option>
+                <option value="1024">1024 bytes</option>
+                <option value="4096">4096 bytes</option>
+            </select>
+        </div>
+
+        <div>
+            <a id="forceGC" href="#" data-bind="text: GCStatus, disable: GCRunning,  click: forceGC">Force GC</a>
+            <a href="/home/LoadGenerator" target="_blank">Load Generator</a>
+        </div>
+
+        <div id="stats">
+            <ul>
+                <li>Status: <span id="status" data-bind="text: status"></span></li>
+                <li>Server FPS: <span id="serverFps" data-bind="text: serverFps"></span></li>
+            </ul>
+        </div>
+
+        <div id="control">
+            <button id="start" data-bind="disable: broadcasting, click: start">Start Broadcast</button>
+            <button id="stop" data-bind="enable: broadcasting, click: stop">Stop Broadcast</button>
+        </div>
+    </fieldset>
+</div>
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+<script src="~/Scripts/jquery.color-2.1.2.js"></script>
+<script src="~/Scripts/knockout-3.4.2.debug.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+<script src="~/Scripts/dashboard.js"></script>

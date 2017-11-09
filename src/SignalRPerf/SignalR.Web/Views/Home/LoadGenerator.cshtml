@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "LoadGenerator";
+}
+
+<h2>LoadGenerator</h2>
+
+<div>
+    Status: <span id="status" class="connecting"></span> <a id="disconnect" href="#"></a>
+</div>
+
+<div>
+    <label for="interval">Send every:</label> <input id="interval" value="100" />ms
+    <input id="go" type="button" value="Go" />
+</div>
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+<script>
+        (function () {
+            var connection = $.connection("PerfConnection"),
+                connected = false,
+                $status = $("#status"),
+                $disconnect = $("#disconnect"),
+                $interval = $("#interval"),
+                $go = $("#go"),
+                payload = "01234567890123456789012345678901", // 32 chars
+                interval = null;
+
+            function connect() {
+                connection.start(function () {
+                    connected = true;
+                });
+            }
+
+            function disconnect() {
+                connection.stop();
+                connected = false;
+
+            }
+
+            function go() {
+                if (connected) {
+                    var i = parseInt($interval.val());
+                    if (isNaN(interval)) return;
+
+                    $interval.prop("disabled", true);
+                    $go.val("Stop");
+
+                    interval = window.setInterval(function () {
+                        connection.send(payload);
+                    }, i);
+                }
+            }
+
+            function stop() {
+                window.clearInterval(interval);
+                interval = null;
+                $interval.prop("disabled", false);
+                $go.val("Go");
+            }
+
+            $disconnect.click(function (e) {
+                e.preventDefault();
+                if (connected) {
+                    disconnect();
+                } else {
+                    connect();
+                }
+            });
+
+            $go.click(function () {
+                if (interval !== null) {
+                    stop();
+                } else {
+                    go();
+                }
+            });
+
+            connection.stateChanged(function (change) {
+                // connecting: 0,
+                // connected: 1,
+                // reconnecting: 2,
+                // disconnected: 4
+
+                switch (change.newState) {
+                    case 0: // connecting
+                        $status.text("Connecting...");
+                        break;
+
+                    case 1: // connected
+                        $status
+                            .removeClass("disconnected")
+                            .addClass("connected")
+                            .text("Connected");
+                        $disconnect.text("(disconnect)")
+                                   .css("display", "inline");
+                        break;
+
+                    case 2: // reconnecting
+                        $status.text("Reconnecting...");
+                        break;
+
+                    case 4: // disconnected
+                        $status
+                            .removeClass("connected")
+                            .addClass("disconnected")
+                            .text("Disconnected");
+                        $disconnect.text("(connect)")
+                        break;
+                }
+            });
+
+            connect();
+        } ());
+</script>

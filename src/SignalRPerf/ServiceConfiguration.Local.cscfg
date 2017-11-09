@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="SignalRPerf" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="5" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="SignalR.Web">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=sasignalra;AccountKey=cCeeSjPoSVgBQNiFduwMkeobt7vUQKmrbwz5IqqMuoJPLuXhkKD66746fHWXAxYHx/ihKTECUhK6bupc86QIDg==;EndpointSuffix=core.windows.net" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="bd6a2b8b-9d8a-4019-854b-926c02fdf9be" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>
