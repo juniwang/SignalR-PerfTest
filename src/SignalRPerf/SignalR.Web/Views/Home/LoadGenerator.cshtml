@@ -18,13 +18,14 @@
 <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
 <script>
         (function () {
-            var connection = $.connection("PerfConnection"),
+            //var connection = $.connection("PerfConnection"),
+            var connection = $.connection("http://13.76.166.188:8080/PerfConnection"),
                 connected = false,
                 $status = $("#status"),
                 $disconnect = $("#disconnect"),
                 $interval = $("#interval"),
                 $go = $("#go"),
-                payload = "01234567890123456789012345678901", // 32 chars
+                payload = "01234567890123456789012345678901".repeat(20), // 32 chars
                 interval = null;
 
             function connect() {

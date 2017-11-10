@@ -134,6 +134,7 @@ jQuery.fn.flash = function (color, duration) {
         }
     }
 
+    $.connection.hub.url = 'http://13.76.166.188:8080/signalr';
     var dashboard = $.signalR.dashboardHub,
         model;
 

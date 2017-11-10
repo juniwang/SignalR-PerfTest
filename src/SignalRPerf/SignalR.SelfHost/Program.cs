@@ -11,9 +11,11 @@ namespace SignalR.SelfHost
     {
         static void Main(string[] args)
         {
-            using (WebApp.Start<Startup>("http://localhost:8080"))
+            using (WebApp.Start<Startup>("http://+:8080"))
             {
-                Console.WriteLine("Server running at http://localhost:8080/");
+                DashboardHub.Init();
+
+                Console.WriteLine("Server running at http://+:8080/");
                 Console.ReadLine();
             }
         }

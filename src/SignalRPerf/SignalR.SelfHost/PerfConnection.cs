@@ -15,11 +15,11 @@ namespace SignalR.SelfHost
         {
             if (Behavior == ConnectionBehavior.Echo)
             {
-                Connection.Send(connectionId, data);
+                Connection.Send(connectionId, "E" + DateTime.UtcNow.Ticks.ToString() + "|" + data);
             }
             else if (Behavior == ConnectionBehavior.Broadcast)
             {
-                Connection.Broadcast(data);
+                Connection.Broadcast("B" + DateTime.UtcNow.Ticks.ToString() + "|" + data);
             }
             return Task.FromResult<object>(null);
         }
