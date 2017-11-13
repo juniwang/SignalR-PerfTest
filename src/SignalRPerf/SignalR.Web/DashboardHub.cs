@@ -25,15 +25,16 @@ namespace SignalR.Web
                     if (_batchingEnabled)
                     {
                         var count = _broadcastCount;
-                        var payload = _broadcastPayload;
+                        var payloadWithTimestamp = "C" + DateTime.UtcNow.Ticks.ToString() + "|" + _broadcastPayload;
                         for (var i = 0; i < count; i++)
                         {
-                            connection.Broadcast(payload);
+                            connection.Broadcast(payloadWithTimestamp);
                         }
                     }
                     else
                     {
-                        connection.Broadcast(_broadcastPayload);
+                        var payloadWithTimestamp = "C" + DateTime.UtcNow.Ticks.ToString() + "|" + _broadcastPayload;
+                        connection.Broadcast(payloadWithTimestamp);
                     }
                 },
                 () => clients.All.started(),

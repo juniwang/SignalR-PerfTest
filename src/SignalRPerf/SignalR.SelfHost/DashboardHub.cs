@@ -25,15 +25,16 @@ namespace SignalR.SelfHost
                     if (_batchingEnabled)
                     {
                         var count = _broadcastCount;
-                        var payload = _broadcastPayload;
                         for (var i = 0; i < count; i++)
                         {
-                            connection.Broadcast(payload);
+                            var payloadWithTimestamp = "C" + DateTime.UtcNow.Ticks.ToString() + "|" + _broadcastPayload;
+                            connection.Broadcast(payloadWithTimestamp);
                         }
                     }
                     else
                     {
-                        connection.Broadcast(_broadcastPayload);
+                        var payloadWithTimestamp = "C" + DateTime.UtcNow.Ticks.ToString() + "|" + _broadcastPayload;
+                        connection.Broadcast(payloadWithTimestamp);
                     }
                 },
                 () => clients.All.started(),
@@ -66,12 +67,14 @@ namespace SignalR.SelfHost
         public void SetConnectionBehavior(ConnectionBehavior behavior)
         {
             PerfConnection.Behavior = behavior;
+            Console.WriteLine("Connection behavior set to: " + behavior.ToString());
             Clients.Others.connectionBehaviorChanged(((int)behavior).ToString());
         }
 
         public void SetBroadcastBehavior(bool batchingEnabled)
         {
             _batchingEnabled = batchingEnabled;
+            Console.WriteLine("Batch enabled");
             Clients.Others.broadcastBehaviorChanged(batchingEnabled);
         }
 
@@ -95,16 +98,19 @@ namespace SignalR.SelfHost
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
+            Console.WriteLine("Force GC done.");
         }
 
         public void StartBroadcast()
         {
+            Console.WriteLine("Starting Broadcast...");
             _timer.Start();
         }
 
         public void StopBroadcast()
         {
             _timer.Stop();
+            Console.WriteLine("Stop Broadcast...");
         }
 
         private static void SetBroadcastPayload()

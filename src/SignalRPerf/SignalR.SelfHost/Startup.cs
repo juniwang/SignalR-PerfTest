@@ -15,7 +15,7 @@ namespace SignalR.SelfHost
         public void Configuration(IAppBuilder app)
         {
             app.UseErrorPage();
-
+            
             app.Map("/PerfConnection", map =>
             {
                 // Turns cors support on allowing everything
