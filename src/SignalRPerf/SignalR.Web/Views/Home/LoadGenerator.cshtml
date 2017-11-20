@@ -10,8 +10,11 @@
 </div>
 
 <div>
-    <label for="interval">Send every:</label> <input id="interval" value="100" />ms
-    <input id="go" type="button" value="Go" />
+    <span><label for="size">Message size:</label> <input id="size" value="20" />Byte</span>
+    <span>
+        <label for="interval">Send every:</label> <input id="interval" value="100" />ms
+        <input id="go" type="button" value="Go" />
+    </span>
 </div>
 
 <script src="~/Scripts/jquery-3.2.1.min.js"></script>
@@ -19,13 +22,14 @@
 <script>
         (function () {
             //var connection = $.connection("PerfConnection"),
-            var connection = $.connection("http://52.163.219.92:8080/PerfConnection"),
+            var connection = $.connection("http://52.187.122.61:8080/PerfConnection"),
                 connected = false,
                 $status = $("#status"),
                 $disconnect = $("#disconnect"),
                 $interval = $("#interval"),
+                $size = $("#size"),
                 $go = $("#go"),
-                payload = "01234567890123456789012345678901".repeat(20), // 32 chars
+                payload = "01234567890123456789012345678901", // 32 chars
                 interval = null;
 
             function connect() {
@@ -43,12 +47,18 @@
             function go() {
                 if (connected) {
                     var i = parseInt($interval.val());
-                    if (isNaN(interval)) return;
+                    var s = parseInt($size.val());
+                    if (isNaN(i) || isNaN(s)) return;
 
                     $interval.prop("disabled", true);
+                    $size.prop("disabled", true);
                     $go.val("Stop");
 
                     interval = window.setInterval(function () {
+                        payload = "C"+((new Date().getTime() * 10000) + 621355968000000000).toString() + "|";
+                        if(s>20){
+                            payload = payload + "a".repeat(size-20);
+                        }
                         connection.send(payload);
                     }, i);
                 }
@@ -58,6 +68,7 @@
                 window.clearInterval(interval);
                 interval = null;
                 $interval.prop("disabled", false);
+                $size.prop("disabled", false);
                 $go.val("Go");
             }
 

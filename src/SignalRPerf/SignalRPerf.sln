@@ -7,7 +7,9 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SignalRPerf", "SignalRPerf.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR.Web", "SignalR.Web\SignalR.Web.csproj", "{2D23D4F6-72A2-4072-A98B-59D6A64D1D93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR.SelfHost", "SignalR.SelfHost\SignalR.SelfHost.csproj", "{4068E038-8A95-4AF1-A344-11EBDF4B42BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR.SelfHostCore", "..\SignalR.SelfHostCore\SignalR.SelfHostCore.csproj", "{0A1939AB-C75D-42DA-9BCE-EE0D4C11545E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR.SelfHost", "..\SignalR.SelfHost\SignalR.SelfHost.csproj", "{4068E038-8A95-4AF1-A344-11EBDF4B42BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{2D23D4F6-72A2-4072-A98B-59D6A64D1D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D23D4F6-72A2-4072-A98B-59D6A64D1D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D23D4F6-72A2-4072-A98B-59D6A64D1D93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A1939AB-C75D-42DA-9BCE-EE0D4C11545E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A1939AB-C75D-42DA-9BCE-EE0D4C11545E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A1939AB-C75D-42DA-9BCE-EE0D4C11545E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A1939AB-C75D-42DA-9BCE-EE0D4C11545E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4068E038-8A95-4AF1-A344-11EBDF4B42BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4068E038-8A95-4AF1-A344-11EBDF4B42BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4068E038-8A95-4AF1-A344-11EBDF4B42BB}.Release|Any CPU.ActiveCfg = Release|Any CPU

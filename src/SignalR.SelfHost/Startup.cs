@@ -3,6 +3,7 @@ using Microsoft.Owin.Cors;
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,25 @@ namespace SignalR.SelfHost
     {
         public void Configuration(IAppBuilder app)
         {
+            string conn = ConfigurationManager.AppSettings["Microsoft.SignalR.ConnectionString"];
+            string backPlane = ConfigurationManager.AppSettings["Microsoft.SignalR.BackPlane"];
+            switch (backPlane)
+            {
+                case "Redis":
+                    GlobalHost.DependencyResolver.UseRedis(new RedisScaleoutConfiguration(conn, "perf"));
+                    break;
+                case "SqlServer":
+                    GlobalHost.DependencyResolver.UseSqlServer(conn);
+                    break;
+                case "MessageBus":
+                    GlobalHost.DependencyResolver.UseServiceBus(conn, "jwperf");
+                    break;
+                default:
+                    break;
+            }
+
             app.UseErrorPage();
-            
+
             app.Map("/PerfConnection", map =>
             {
                 // Turns cors support on allowing everything
